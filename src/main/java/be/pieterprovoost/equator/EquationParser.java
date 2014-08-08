@@ -18,7 +18,7 @@ public class EquationParser {
         Stack<Token> stack = new Stack<Token>();
         List<Token> queue = new ArrayList<Token>();
 
-        StringTokenizer st = new StringTokenizer(equation, "+-*/()^", true);
+        StringTokenizer st = new StringTokenizer(equation, "+-*/()^ ", true);
         while (st.hasMoreTokens()) {
             Token token = new Token(st.nextToken().trim());
             if (!token.getName().isEmpty()) {
@@ -43,6 +43,9 @@ public class EquationParser {
                     while (!stack.empty() && stack.peek().getType() != TokenType.OPENING) {
                         queue.add(stack.pop());
                     }
+                    if (stack.empty()) {
+                        throw new IllegalArgumentException("Parenthesis mismatch");
+                    }
                     stack.pop();
                     if (!stack.empty() && stack.peek().getType() == TokenType.FUNCTION) {
                         queue.add(stack.pop());
@@ -52,6 +55,9 @@ public class EquationParser {
         }
 
         while (!stack.empty()) {
+            if (stack.peek().getType() == TokenType.OPENING) {
+                throw new IllegalArgumentException("Parenthesis mismatch");
+            }
             queue.add(stack.pop());
         }
 

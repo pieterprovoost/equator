@@ -23,6 +23,27 @@ public class EquationEngineTest {
         engine.evaluate("z = 2 + 3 * 5");
         assertEquals(engine.getValue("z"), 17, 1);
 
+        try {
+            engine.evaluate("k = 1 2");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e.getMessage().equals("Missing operator"));
+        }
+
+        try {
+            engine.evaluate("k = 2 *");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e.getMessage().equals("Missing operand"));
+        }
+
+        try {
+            engine.evaluate("k = (2 * 3)) + 4");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e.getMessage().equals("Parenthesis mismatch"));
+        }
+
     }
 
 }

@@ -78,6 +78,9 @@ public class EquationEngine {
                 }
                 stack.push(token);
             } else if (token.getType() == TokenType.OPERATOR) {
+                if (stack.size() < 2) {
+                    throw new IllegalArgumentException("Missing operand");
+                }
                 Token second = stack.pop();
                 Token first = stack.pop();
                 Token result = new Token("");
@@ -125,6 +128,10 @@ public class EquationEngine {
 
                 stack.push(result);
             }
+        }
+
+        if (stack.size() != 1) {
+            throw new IllegalArgumentException("Missing operator");
         }
         return stack.get(0).getValue();
     }
