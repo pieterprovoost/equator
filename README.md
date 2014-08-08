@@ -7,8 +7,8 @@ EquationEngine engine = new EquationEngine();
 engine.evaluate("a = pi");
 engine.evaluate("x = cos(a) + 1.25");
 engine.evaluate("y = x^2");
-engine.evaluate("x");
-engine.evaluate("y");
+engine.printValue("x");
+engine.printValue("y");
 ```
 
 ```
