@@ -39,11 +39,14 @@ public class EquationEngine {
     /**
      * Returns the value of a variable.
      *
-     * @param input variable name
+     * @param variable variable name
      * @return variable value
      */
-    public Double getValue(String input) {
-        return map.get(input.trim());
+    public Double getValue(String variable) {
+        if (!map.containsKey(variable.trim())) {
+            throw new IllegalArgumentException("Variable " + variable.trim() + " does not exist");
+        }
+        return map.get(variable.trim());
     }
 
     /**
