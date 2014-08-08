@@ -26,8 +26,6 @@ public class EquationEngine {
             List<Token> queue = EquationParser.parse(equation);
             Double result = process(queue);
             map.put(variable, result);
-        } else if (parts.length == 1) {
-            System.out.println(map.get(parts[0].trim()));
         }
     }
 
@@ -37,8 +35,17 @@ public class EquationEngine {
      * @param input variable name
      * @return variable value
      */
-    public Double evaluateVariable(String input) {
+    public Double getValue(String input) {
         return map.get(input.trim());
+    }
+
+    /**
+     * Prints the value of a variable.
+     *
+     * @param input variable name
+     */
+    public void printValue(String input) {
+        System.out.println(getValue(input));
     }
 
     /**
