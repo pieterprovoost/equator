@@ -1,5 +1,7 @@
 package be.pieterprovoost.equator;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +24,15 @@ public class EquationEngine {
         String[] parts = input.split("=");
         if (parts.length == 2) {
             String variable = parts[0].trim();
-            String equation = parts[1].trim();
-            List<Token> queue = EquationParser.parse(equation);
+            String expression = parts[1].trim();
+            if (!StringUtils.isAlphanumeric(variable)) {
+                throw new IllegalArgumentException("Equation must be of the form variable = expression");
+            }
+            List<Token> queue = EquationParser.parse(expression);
             Double result = process(queue);
             map.put(variable, result);
+        } else {
+            throw new IllegalArgumentException("Equation must be of the form variable = expression");
         }
     }
 
