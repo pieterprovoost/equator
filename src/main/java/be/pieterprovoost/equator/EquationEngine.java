@@ -37,22 +37,27 @@ public class EquationEngine {
     }
 
     /**
-     * Returns the value of a variable.
+     * Returns the value of a variable or expression.
      *
-     * @param variable variable name
-     * @return variable value
+     * @param input variable name or expression
+     * @return value
      */
-    public Double getValue(String variable) {
-        if (!map.containsKey(variable.trim())) {
-            throw new IllegalArgumentException("Variable " + variable.trim() + " does not exist");
+    public Double getValue(String input) {
+        if (StringUtils.isAlphanumeric(input.trim())) {
+            if (!map.containsKey(input.trim())) {
+                throw new IllegalArgumentException("Variable " + input.trim() + " does not exist");
+            }
+            return map.get(input.trim());
+        } else {
+            List<Token> queue = EquationParser.parse(input);
+            return(process(queue));
         }
-        return map.get(variable.trim());
     }
 
     /**
-     * Prints the value of a variable.
+     * Prints the value of a variable or expression.
      *
-     * @param input variable name
+     * @param input variable name or expression
      */
     public void printValue(String input) {
         System.out.println(getValue(input));
