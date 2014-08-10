@@ -39,15 +39,15 @@ public class EquationEngine {
      * @param input variable name or expression
      * @return value
      */
-    public Double getValue(String input) {
+    public List<Double> getValue(String input) {
         if (StringUtils.isAlphanumeric(input.trim())) {
             if (!map.containsKey(input.trim())) {
                 throw new IllegalArgumentException("Variable " + input.trim() + " does not exist");
             }
-            return map.get(input.trim()).getValue();
+            return map.get(input.trim()).getValues();
         } else {
             List<Token> queue = EquationParser.parse(input);
-            return(process(queue).getValue());
+            return(process(queue).getValues());
         }
     }
 
@@ -57,7 +57,8 @@ public class EquationEngine {
      * @param input variable name or expression
      */
     public void printValue(String input) {
-        System.out.println(getValue(input));
+        List<Double> values = getValue(input);
+        System.out.println(StringUtils.join(values, ", "));
     }
 
     /**
@@ -74,35 +75,36 @@ public class EquationEngine {
                 stack.push(token);
             } else if (token.getType() == TokenType.VARIABLE) {
                 if (token.getName().toLowerCase().equals("pi")) {
-                    token.setValue(Math.PI);
+                    token.add(Math.PI);
                 } else {
                     token = map.get(token.getName());
                 }
                 stack.push(token);
             } else if (token.getType() == TokenType.OPERATOR) {
                 if (stack.size() < 2) {
-                    throw new IllegalArgumentException("Missing operand");
+                    throw new RuntimeException("Missing operand");
                 }
                 Token second = stack.pop();
                 Token first = stack.pop();
-                Token result = new Token("");
-
-                if (first.isSingle() && second.isSingle()) {
-                    result.setValue(token.getOperatorType().calculate(first.getValue(), second.getValue()));
-                } else if (first.isSingle()) {
-                    for (Double value : second.getValues()) {
-                        result.getValues().add(token.getOperatorType().calculate(first.getValue(), value));
+                Token result = new Token();
+                if (first.isVector() && second.isVector()) {
+                    if (first.getValues().size() != second.getValues().size()) {
+                        throw new RuntimeException("Operands must have the same size");
                     }
-                } else if (second.isSingle()) {
-                    for (Double value : first.getValues()) {
-                        result.getValues().add(token.getOperatorType().calculate(value, second.getValue()));
-                    }
-                } else {
                     for (int v = 0; v < first.getValues().size(); v++) {
                         result.getValues().add(token.getOperatorType().calculate(first.getValues().get(v), second.getValues().get(v)));
                     }
+                } else if (first.isSingle() && second.isSingle()) {
+                    result.add(token.getOperatorType().calculate(first.getValues().get(0), second.getValues().get(0)));
+                } else if (first.isSingle()) {
+                    for (Double value : second.getValues()) {
+                        result.getValues().add(token.getOperatorType().calculate(first.getValues().get(0), value));
+                    }
+                } else if (second.isSingle()) {
+                    for (Double value : first.getValues()) {
+                        result.getValues().add(token.getOperatorType().calculate(value, second.getValues().get(0)));
+                    }
                 }
-
                 stack.push(result);
             } else if (token.getType() == TokenType.FUNCTION) {
                 List<Token> arguments = new ArrayList<Token>();

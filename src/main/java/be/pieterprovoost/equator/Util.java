@@ -20,11 +20,7 @@ public class Util {
         Iterator<Token> iterator = collection.iterator();
         while (iterator.hasNext()) {
             Token token = iterator.next();
-            if (token.getValue() != null) {
-                parts.add(token.getName() + " (" + token.getValue() + ")");
-            } else {
-                parts.add(token.getName());
-            }
+            parts.add(token.getName());
         }
         return(StringUtils.join(parts, " "));
     }

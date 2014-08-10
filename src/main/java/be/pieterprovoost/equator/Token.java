@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class Token {
 
-    private Double value;
     private List<Double> values = new ArrayList<Double>();
     private String name;
     private TokenType type;
@@ -19,7 +18,7 @@ public class Token {
     }
 
     public Token(Double value) {
-        this.value = value;
+        values.add(value);
     }
 
     /**
@@ -47,7 +46,7 @@ public class Token {
             }
         } else if (TokenType.isNumeric(name)) {
             this.type = TokenType.VALUE;
-            this.value = Double.parseDouble(name);
+            values.add(Double.parseDouble(name));
         } else if (TokenType.separators.contains(name)) {
             this.type = TokenType.SEPARATOR;
         } else if (TokenType.closings.contains(name)) {
@@ -57,6 +56,10 @@ public class Token {
         } else {
             this.type = TokenType.VARIABLE;
         }
+    }
+
+    public void add(Double value) {
+        values.add(value);
     }
 
     /**
@@ -70,23 +73,15 @@ public class Token {
     }
 
     public boolean isVector() {
-        return values.size() > 0;
+        return values.size() > 1;
     }
 
     public boolean isSingle() {
-        return value != null;
+        return values.size() == 1;
     }
 
     public String toString() {
         return name;
-    }
-
-    public Double getValue() {
-        return value;
-    }
-
-    public void setValue(Double value) {
-        this.value = value;
     }
 
     public String getName() {

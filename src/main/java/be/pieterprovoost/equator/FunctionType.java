@@ -26,36 +26,54 @@ public enum FunctionType {
         Token result = new Token();
         switch (this) {
             case SIN:
-                result = new Token(Math.sin(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.sin(x));
+                }
                 break;
             case COS:
-                result = new Token(Math.cos(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.cos(x));
+                }
                 break;
             case EXP:
-                result = new Token(Math.exp(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.exp(x));
+                }
                 break;
             case ABS:
-                result = new Token(Math.abs(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.abs(x));
+                }
                 break;
             case ACOS:
-                result = new Token(Math.acos(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.acos(x));
+                }
                 break;
             case ASIN:
-                result = new Token(Math.asin(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.asin(x));
+                }
                 break;
             case ATAN:
-                result = new Token(Math.atan(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.atan(x));
+                }
                 break;
             case CEIL:
-                result = new Token(Math.ceil(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.ceil(x));
+                }
                 break;
             case FLOOR:
-                result = new Token(Math.floor(arguments.get(0).getValue()));
+                for (Double x : arguments.get(0).getValues()) {
+                    result.add(Math.floor(x));
+                }
                 break;
             case SEQ:
-                Double start = arguments.get(2).getValue();
-                Double end = arguments.get(1).getValue();
-                Double step = arguments.get(0).getValue();
+                Double start = arguments.get(2).getValues().get(0);
+                Double end = arguments.get(1).getValues().get(0);
+                Double step = arguments.get(0).getValues().get(0);
                 for (Double x = start; x <= end; x = x + step) {
                     result.getValues().add(x);
                 }
@@ -65,7 +83,7 @@ public enum FunctionType {
                 for (Double value : arguments.get(0).getValues()) {
                     sum = sum + value;
                 }
-                result.setValue(sum);
+                result.add(sum);
                 break;
         }
         return result;
