@@ -1,15 +1,26 @@
 package be.pieterprovoost.equator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class Token.
  */
 public class Token {
 
     private Double value;
+    private List<Double> values = new ArrayList<Double>();
     private String name;
     private TokenType type;
     private OperatorType operatorType;
     private FunctionType functionType;
+
+    public Token() {
+    }
+
+    public Token(Double value) {
+        this.value = value;
+    }
 
     /**
      * Constructor, sets token type, operator type and function type.
@@ -58,6 +69,14 @@ public class Token {
         return OperatorComparator.compare(this.getOperatorType(), other.getOperatorType()) > 0;
     }
 
+    public boolean isVector() {
+        return values.size() > 0;
+    }
+
+    public boolean isSingle() {
+        return value != null;
+    }
+
     public String toString() {
         return name;
     }
@@ -92,5 +111,13 @@ public class Token {
 
     public FunctionType getFunctionType() {
         return functionType;
+    }
+
+    public List<Double> getValues() {
+        return values;
+    }
+
+    public void setValues(List<Double> values) {
+        this.values = values;
     }
 }

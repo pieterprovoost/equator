@@ -2,17 +2,14 @@ package be.pieterprovoost.equator;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Class EquationEngine.
  */
 public class EquationEngine {
 
-    private Map<String, Double> map = new HashMap<String, Double>();
+    private Map<String, Token> map = new HashMap<String, Token>();
     private Stack<Token> stack = new Stack<Token>();
 
     /**
@@ -29,7 +26,7 @@ public class EquationEngine {
                 throw new IllegalArgumentException("Equation must be of the form variable = expression");
             }
             List<Token> queue = EquationParser.parse(expression);
-            Double result = process(queue);
+            Token result = process(queue);
             map.put(variable, result);
         } else {
             throw new IllegalArgumentException("Equation must be of the form variable = expression");
@@ -47,10 +44,10 @@ public class EquationEngine {
             if (!map.containsKey(input.trim())) {
                 throw new IllegalArgumentException("Variable " + input.trim() + " does not exist");
             }
-            return map.get(input.trim());
+            return map.get(input.trim()).getValue();
         } else {
             List<Token> queue = EquationParser.parse(input);
-            return(process(queue));
+            return(process(queue).getValue());
         }
     }
 
@@ -69,7 +66,7 @@ public class EquationEngine {
      * @param queue token queue
      * @return result
      */
-    private Double process(List<Token> queue) {
+    private Token process(List<Token> queue) {
         stack.clear();
         for (int i = 0; i < queue.size(); i++) {
             Token token = queue.get(i);
@@ -79,7 +76,7 @@ public class EquationEngine {
                 if (token.getName().toLowerCase().equals("pi")) {
                     token.setValue(Math.PI);
                 } else {
-                    token.setValue(map.get(token.getName()));
+                    token = map.get(token.getName());
                 }
                 stack.push(token);
             } else if (token.getType() == TokenType.OPERATOR) {
@@ -90,55 +87,36 @@ public class EquationEngine {
                 Token first = stack.pop();
                 Token result = new Token("");
 
-                if (token.getOperatorType() == OperatorType.ADD) {
-                    result.setValue(first.getValue() + second.getValue());
-                } else if (token.getOperatorType() == OperatorType.SUBTRACT) {
-                    result.setValue(first.getValue() - second.getValue());
-                } else if (token.getOperatorType() == OperatorType.DIVIDE) {
-                    result.setValue(first.getValue() / second.getValue());
-                } else if (token.getOperatorType() == OperatorType.MULTIPLY) {
-                    result.setValue(first.getValue() * second.getValue());
-                } else if (token.getOperatorType() == OperatorType.MOD) {
-                    result.setValue(first.getValue() % second.getValue());
-                } else if (token.getOperatorType() == OperatorType.POWER) {
-                    result.setValue(Math.pow(first.getValue(), second.getValue()));
+                if (first.isSingle() && second.isSingle()) {
+                    result.setValue(token.getOperatorType().calculate(first.getValue(), second.getValue()));
+                } else if (first.isSingle()) {
+                    for (Double value : second.getValues()) {
+                        result.getValues().add(token.getOperatorType().calculate(first.getValue(), value));
+                    }
+                } else if (second.isSingle()) {
+                    for (Double value : first.getValues()) {
+                        result.getValues().add(token.getOperatorType().calculate(value, second.getValue()));
+                    }
+                } else {
+                    for (int v = 0; v < first.getValues().size(); v++) {
+                        result.getValues().add(token.getOperatorType().calculate(first.getValues().get(v), second.getValues().get(v)));
+                    }
                 }
 
                 stack.push(result);
             } else if (token.getType() == TokenType.FUNCTION) {
-                Token argument = stack.pop();
-                Token result = new Token("");
-
-                if (token.getFunctionType() == FunctionType.COS) {
-                    result.setValue(Math.cos(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.COS) {
-                    result.setValue(Math.cos(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.SIN) {
-                    result.setValue(Math.sin(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.EXP) {
-                    result.setValue(Math.exp(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.ASIN) {
-                    result.setValue(Math.asin(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.ACOS) {
-                    result.setValue(Math.acos(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.ATAN) {
-                    result.setValue(Math.atan(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.CEIL) {
-                    result.setValue(Math.ceil(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.FLOOR) {
-                    result.setValue(Math.floor(argument.getValue()));
-                } else if (token.getFunctionType() == FunctionType.ABS) {
-                    result.setValue(Math.abs(argument.getValue()));
+                List<Token> arguments = new ArrayList<Token>();
+                for (int a = 0; a < token.getFunctionType().getArguments(); a++) {
+                    arguments.add(stack.pop());
                 }
-
-                stack.push(result);
+                stack.push(token.getFunctionType().calculate(arguments));
             }
         }
 
         if (stack.size() != 1) {
             throw new IllegalArgumentException("Missing operator");
         }
-        return stack.get(0).getValue();
+        return stack.get(0);
     }
 
     /**

@@ -22,6 +22,25 @@ public enum OperatorType {
         this.left = left;
     }
 
+    public Double calculate(Double first, Double second) {
+        switch (this) {
+            case ADD:
+                return first + second;
+            case SUBTRACT:
+                return first - second;
+            case DIVIDE:
+                return first / second;
+            case MOD:
+                return first % second;
+            case MULTIPLY:
+                return first * second;
+            case POWER:
+                return Math.pow(first, second);
+            default:
+                return null;
+        }
+    }
+
     public int getPrecedence() {
         return precedence;
     }

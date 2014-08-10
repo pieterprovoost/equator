@@ -6,10 +6,13 @@ package be.pieterprovoost.equator;
 public class Main {
 
     public static void main(String[] args) {
+
         EquationEngine engine = new EquationEngine();
-        engine.evaluate("x = 3");
-        engine.evaluate("y = x^2");
-        engine.printValue("y - 1");
+
+        engine.evaluate("x = seq(1, 2, 0.5)");
+        engine.evaluate("y = exp(x)");
+        engine.printValue("sum(y)");
+
     }
 
 }

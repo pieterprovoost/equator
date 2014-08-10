@@ -10,7 +10,7 @@ public enum TokenType {
 
     FUNCTION, OPERATOR, VARIABLE, VALUE, SEPARATOR, OPENING, CLOSING;
 
-    public static List<String> functions = Arrays.asList("log", "exp", "sin", "cos", "sqrt", "abs", "acos", "asin", "atan", "ceil", "floor");
+    public static List<String> functions = Arrays.asList("sum", "seq", "log", "exp", "sin", "cos", "sqrt", "abs", "acos", "asin", "atan", "ceil", "floor");
     public static List<String> operators = Arrays.asList("+", "-", "*", "/", "^", "%");
     public static List<String> separators = Arrays.asList(",");
     public static List<String> openings = Arrays.asList("(");

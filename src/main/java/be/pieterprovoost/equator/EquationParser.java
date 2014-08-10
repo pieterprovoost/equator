@@ -18,7 +18,7 @@ public class EquationParser {
         Stack<Token> stack = new Stack<Token>();
         List<Token> queue = new ArrayList<Token>();
 
-        StringTokenizer st = new StringTokenizer(equation, "+-*/()^ ", true);
+        StringTokenizer st = new StringTokenizer(equation, "+-*/()^, ", true);
         while (st.hasMoreTokens()) {
             Token token = new Token(st.nextToken().trim());
             if (!token.getName().isEmpty()) {
