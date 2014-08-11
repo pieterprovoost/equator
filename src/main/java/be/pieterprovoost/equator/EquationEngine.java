@@ -39,7 +39,7 @@ public class EquationEngine {
      * @param input variable name or expression
      * @return value
      */
-    public List<Double> getValue(String input) {
+    public List<Double> getValues(String input) {
         if (StringUtils.isAlphanumeric(input.trim())) {
             if (!map.containsKey(input.trim())) {
                 throw new IllegalArgumentException("Variable " + input.trim() + " does not exist");
@@ -56,8 +56,8 @@ public class EquationEngine {
      *
      * @param input variable name or expression
      */
-    public void printValue(String input) {
-        List<Double> values = getValue(input);
+    public void print(String input) {
+        List<Double> values = getValues(input);
         System.out.println(StringUtils.join(values, ", "));
     }
 
@@ -68,6 +68,9 @@ public class EquationEngine {
      * @return result
      */
     private Token process(List<Token> queue) {
+
+        Util.print(queue);
+
         stack.clear();
         for (int i = 0; i < queue.size(); i++) {
             Token token = queue.get(i);
@@ -77,6 +80,9 @@ public class EquationEngine {
                 if (token.getName().toLowerCase().equals("pi")) {
                     token.add(Math.PI);
                 } else {
+                    if (!map.containsKey(token.getName())) {
+                        throw new RuntimeException("Variable " + token.getName() + " is not set");
+                    }
                     token = map.get(token.getName());
                 }
                 stack.push(token);

@@ -15,7 +15,7 @@ public class Util {
      * @param collection token queue or stack
      * @return string representation
      */
-    public static String print(Collection<Token> collection) {
+    public static String toString(Collection<Token> collection) {
         List<String> parts = new ArrayList<String>();
         Iterator<Token> iterator = collection.iterator();
         while (iterator.hasNext()) {
@@ -23,6 +23,10 @@ public class Util {
             parts.add(token.getName());
         }
         return(StringUtils.join(parts, " "));
+    }
+
+    public static void print(Collection<Token> collection) {
+        System.out.println(toString(collection));
     }
 
 }
