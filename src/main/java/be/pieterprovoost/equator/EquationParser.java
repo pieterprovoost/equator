@@ -17,10 +17,11 @@ public class EquationParser {
 
         Stack<Token> stack = new Stack<Token>();
         List<Token> queue = new ArrayList<Token>();
+        TokenType last = null;
 
         StringTokenizer st = new StringTokenizer(equation, "+-*/()^, ", true);
         while (st.hasMoreTokens()) {
-            Token token = new Token(st.nextToken().trim());
+            Token token = new Token(st.nextToken().trim(), last);
             if (!token.getName().isEmpty()) {
                 if (token.getType() == TokenType.VALUE || token.getType() == TokenType.VARIABLE) {
                     queue.add(token);
@@ -51,6 +52,7 @@ public class EquationParser {
                         queue.add(stack.pop());
                     }
                 }
+                last = token.getType();
             }
         }
 

@@ -9,8 +9,11 @@ public class Main {
 
         EquationEngine engine = new EquationEngine();
 
-        engine.evaluate("x = 3 * (0-2)");
+        //engine.evaluate("x = -2");
         engine.evaluate("x = 3 * -2");
+        //engine.evaluate("x = sin(-2)");
+
+        engine.print("x");
 
     }
 

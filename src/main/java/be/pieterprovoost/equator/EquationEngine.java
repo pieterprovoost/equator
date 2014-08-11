@@ -87,31 +87,14 @@ public class EquationEngine {
                 }
                 stack.push(token);
             } else if (token.getType() == TokenType.OPERATOR) {
-                if (stack.size() < 2) {
-                    throw new RuntimeException("Missing operand");
+                List<Token> operands = new ArrayList<Token>();
+                for (int o = 0; o < token.getOperatorType().getOperands(); o++) {
+                    if (stack.empty()) {
+                        throw new RuntimeException("Missing operand");
+                    }
+                    operands.add(stack.pop());
                 }
-                Token second = stack.pop();
-                Token first = stack.pop();
-                Token result = new Token();
-                if (first.isVector() && second.isVector()) {
-                    if (first.getValues().size() != second.getValues().size()) {
-                        throw new RuntimeException("Operands must have the same size");
-                    }
-                    for (int v = 0; v < first.getValues().size(); v++) {
-                        result.getValues().add(token.getOperatorType().calculate(first.getValues().get(v), second.getValues().get(v)));
-                    }
-                } else if (first.isSingle() && second.isSingle()) {
-                    result.add(token.getOperatorType().calculate(first.getValues().get(0), second.getValues().get(0)));
-                } else if (first.isSingle()) {
-                    for (Double value : second.getValues()) {
-                        result.getValues().add(token.getOperatorType().calculate(first.getValues().get(0), value));
-                    }
-                } else if (second.isSingle()) {
-                    for (Double value : first.getValues()) {
-                        result.getValues().add(token.getOperatorType().calculate(value, second.getValues().get(0)));
-                    }
-                }
-                stack.push(result);
+                stack.push(token.getOperatorType().calculate(operands));
             } else if (token.getType() == TokenType.FUNCTION) {
                 List<Token> arguments = new ArrayList<Token>();
                 for (int a = 0; a < token.getFunctionType().getArguments(); a++) {

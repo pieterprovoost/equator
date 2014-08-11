@@ -26,7 +26,7 @@ public class Token {
      *
      * @param name token name
      */
-    public Token(String name) {
+    public Token(String name, TokenType last) {
         this.name = name;
         if (TokenType.functions.contains(name)) {
             this.type = TokenType.FUNCTION;
@@ -43,6 +43,10 @@ public class Token {
                     this.operatorType = type;
                     break;
                 }
+            }
+            if (this.operatorType == OperatorType.SUBTRACT
+                    && (last == TokenType.OPENING || last == TokenType.OPERATOR || last == TokenType.SEPARATOR || last == null)) {
+                this.operatorType = OperatorType.MINUS;
             }
         } else if (TokenType.isNumeric(name)) {
             this.type = TokenType.VALUE;
