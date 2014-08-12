@@ -42,7 +42,7 @@ public class EquationEngine {
     public List<Double> getValues(String input) {
         if (StringUtils.isAlphanumeric(input.trim())) {
             if (!map.containsKey(input.trim())) {
-                throw new IllegalArgumentException("Variable " + input.trim() + " does not exist");
+                throw new IllegalArgumentException("Variable " + input.trim() + " is not set");
             }
             return map.get(input.trim()).getValues();
         } else {
@@ -68,9 +68,6 @@ public class EquationEngine {
      * @return result
      */
     private Token process(List<Token> queue) {
-
-        Util.print(queue);
-
         stack.clear();
         for (int i = 0; i < queue.size(); i++) {
             Token token = queue.get(i);

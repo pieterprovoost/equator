@@ -44,6 +44,13 @@ public class EquationEngineTest {
             assertTrue(e.getMessage().equals("Parenthesis mismatch"));
         }
 
+        try {
+            engine.evaluate("k = v * 2");
+            fail();
+        } catch (Exception e) {
+            assertTrue(e.getMessage().contains("is not set"));
+        }
+
     }
 
 }

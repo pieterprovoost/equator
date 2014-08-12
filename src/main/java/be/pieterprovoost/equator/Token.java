@@ -45,7 +45,7 @@ public class Token {
                 }
             }
             if (this.operatorType == OperatorType.SUBTRACT
-                    && (last == TokenType.OPENING || last == TokenType.OPERATOR || last == TokenType.SEPARATOR || last == null)) {
+                    && (last == null || last == TokenType.OPENING || last == TokenType.OPERATOR || last == TokenType.SEPARATOR)) {
                 this.operatorType = OperatorType.MINUS;
             }
         } else if (TokenType.isNumeric(name)) {
