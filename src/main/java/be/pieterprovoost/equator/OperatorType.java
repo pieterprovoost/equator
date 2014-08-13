@@ -32,121 +32,121 @@ public enum OperatorType {
         switch (this) {
             case ADD:
                 if (operands.get(0).isSingle() && operands.get(1).isSingle()) {
-                    result.add(operands.get(0).getValues().get(0) + operands.get(1).getValues().get(0));
+                    result.add(operands.get(1).getValues().get(0) + operands.get(0).getValues().get(0));
                 } else if (operands.get(0).isSingle()) {
                     for (Double value : operands.get(1).getValues()) {
-                        result.add(operands.get(0).getValues().get(0) + value);
+                        result.add(value + operands.get(0).getValues().get(0));
                     }
                 } else if (operands.get(1).isSingle()) {
                     for (Double value : operands.get(0).getValues()) {
-                        result.add(value + operands.get(1).getValues().get(0));
+                        result.add(operands.get(1).getValues().get(0) + value);
                     }
                 } else {
                     if (operands.get(0).getValues().size() != operands.get(1).getValues().size()) {
                         throw new RuntimeException("Operands must have the same size");
                     }
                     for (int i = 0; i < operands.get(0).getValues().size(); i++) {
-                        result.add(operands.get(0).getValues().get(i) + operands.get(1).getValues().get(i));
+                        result.add(operands.get(1).getValues().get(i) + operands.get(0).getValues().get(i));
                     }
                 }
                 break;
             case SUBTRACT:
                 if (operands.get(0).isSingle() && operands.get(1).isSingle()) {
-                    result.add(operands.get(0).getValues().get(0) - operands.get(1).getValues().get(0));
+                    result.add(operands.get(1).getValues().get(0) - operands.get(0).getValues().get(0));
                 } else if (operands.get(0).isSingle()) {
                     for (Double value : operands.get(1).getValues()) {
-                        result.add(operands.get(0).getValues().get(0) - value);
+                        result.add(value - operands.get(0).getValues().get(0));
                     }
                 } else if (operands.get(1).isSingle()) {
                     for (Double value : operands.get(0).getValues()) {
-                        result.add(value - operands.get(1).getValues().get(0));
+                        result.add(operands.get(1).getValues().get(0) - value);
                     }
                 } else {
                     if (operands.get(0).getValues().size() != operands.get(1).getValues().size()) {
                         throw new RuntimeException("Operands must have the same size");
                     }
                     for (int i = 0; i < operands.get(0).getValues().size(); i++) {
-                        result.add(operands.get(0).getValues().get(i) - operands.get(1).getValues().get(i));
+                        result.add(operands.get(1).getValues().get(i) - operands.get(0).getValues().get(i));
                     }
                 }
                 break;
             case DIVIDE:
                 if (operands.get(0).isSingle() && operands.get(1).isSingle()) {
-                    result.add(operands.get(0).getValues().get(0) / operands.get(1).getValues().get(0));
+                    result.add(operands.get(1).getValues().get(0) / operands.get(0).getValues().get(0));
                 } else if (operands.get(0).isSingle()) {
                     for (Double value : operands.get(1).getValues()) {
-                        result.add(operands.get(0).getValues().get(0) / value);
+                        result.add(value / operands.get(0).getValues().get(0));
                     }
                 } else if (operands.get(1).isSingle()) {
                     for (Double value : operands.get(0).getValues()) {
-                        result.add(value / operands.get(1).getValues().get(0));
+                        result.add(operands.get(1).getValues().get(0) / value);
                     }
                 } else {
                     if (operands.get(0).getValues().size() != operands.get(1).getValues().size()) {
                         throw new RuntimeException("Operands must have the same size");
                     }
                     for (int i = 0; i < operands.get(0).getValues().size(); i++) {
-                        result.add(operands.get(0).getValues().get(i) / operands.get(1).getValues().get(i));
+                        result.add(operands.get(1).getValues().get(i) / operands.get(0).getValues().get(i));
                     }
                 }
                 break;
             case MOD:
                 if (operands.get(0).isSingle() && operands.get(1).isSingle()) {
-                    result.add(operands.get(0).getValues().get(0) % operands.get(1).getValues().get(0));
+                    result.add(operands.get(1).getValues().get(0) % operands.get(0).getValues().get(0));
                 } else if (operands.get(0).isSingle()) {
                     for (Double value : operands.get(1).getValues()) {
-                        result.add(operands.get(0).getValues().get(0) % value);
+                        result.add(value % operands.get(0).getValues().get(0));
                     }
                 } else if (operands.get(1).isSingle()) {
                     for (Double value : operands.get(0).getValues()) {
-                        result.add(value % operands.get(1).getValues().get(0));
+                        result.add(operands.get(1).getValues().get(0) % value);
                     }
                 } else {
                     if (operands.get(0).getValues().size() != operands.get(1).getValues().size()) {
                         throw new RuntimeException("Operands must have the same size");
                     }
                     for (int i = 0; i < operands.get(0).getValues().size(); i++) {
-                        result.add(operands.get(0).getValues().get(i) % operands.get(1).getValues().get(i));
+                        result.add(operands.get(1).getValues().get(i) % operands.get(0).getValues().get(i));
                     }
                 }
                 break;
             case MULTIPLY:
                 if (operands.get(0).isSingle() && operands.get(1).isSingle()) {
-                    result.add(operands.get(0).getValues().get(0) * operands.get(1).getValues().get(0));
+                    result.add(operands.get(1).getValues().get(0) * operands.get(0).getValues().get(0));
                 } else if (operands.get(0).isSingle()) {
                     for (Double value : operands.get(1).getValues()) {
-                        result.add(operands.get(0).getValues().get(0) * value);
+                        result.add(value * operands.get(0).getValues().get(0));
                     }
                 } else if (operands.get(1).isSingle()) {
                     for (Double value : operands.get(0).getValues()) {
-                        result.add(value * operands.get(1).getValues().get(0));
+                        result.add(operands.get(1).getValues().get(0) * value);
                     }
                 } else {
                     if (operands.get(0).getValues().size() != operands.get(1).getValues().size()) {
                         throw new RuntimeException("Operands must have the same size");
                     }
                     for (int i = 0; i < operands.get(0).getValues().size(); i++) {
-                        result.add(operands.get(0).getValues().get(i) * operands.get(1).getValues().get(i));
+                        result.add(operands.get(1).getValues().get(i) * operands.get(0).getValues().get(i));
                     }
                 }
                 break;
             case POWER:
                 if (operands.get(0).isSingle() && operands.get(1).isSingle()) {
-                    result.add(Math.pow(operands.get(0).getValues().get(0), operands.get(1).getValues().get(0)));
+                    result.add(Math.pow(operands.get(1).getValues().get(0), operands.get(0).getValues().get(0)));
                 } else if (operands.get(0).isSingle()) {
                     for (Double value : operands.get(1).getValues()) {
-                        result.add(Math.pow(operands.get(0).getValues().get(0), value));
+                        result.add(Math.pow(value, operands.get(0).getValues().get(0)));
                     }
                 } else if (operands.get(1).isSingle()) {
                     for (Double value : operands.get(0).getValues()) {
-                        result.add(Math.pow(value, operands.get(1).getValues().get(0)));
+                        result.add(Math.pow(operands.get(1).getValues().get(0), value));
                     }
                 } else {
                     if (operands.get(0).getValues().size() != operands.get(1).getValues().size()) {
                         throw new RuntimeException("Operands must have the same size");
                     }
                     for (int i = 0; i < operands.get(0).getValues().size(); i++) {
-                        result.add(Math.pow(operands.get(0).getValues().get(i), operands.get(1).getValues().get(i)));
+                        result.add(Math.pow(operands.get(1).getValues().get(i), operands.get(0).getValues().get(i)));
                     }
                 }
                 break;
