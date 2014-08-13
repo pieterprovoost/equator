@@ -19,13 +19,13 @@ public class Terminal {
                 try {
                     engine.evaluate(input);
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Error: " + e.getMessage());
                 }
             } else {
                 try {
                     engine.print(input);
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
+                    System.out.println("Error: " + e.getMessage());
                 }
             }
         }
