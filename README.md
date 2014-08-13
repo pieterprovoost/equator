@@ -2,16 +2,14 @@
 
 Evaluation of mathematical equations using the shunting-yard algorithm
 
-```java
-EquationEngine engine = new EquationEngine();
-engine.evaluate("a = pi");
-engine.evaluate("x = cos(a) + 1.25");
-engine.evaluate("y = x^2");
-engine.printValue("x");
-engine.printValue("y");
-```
-
-```
-0.25
-0.0625
-```
+```text
+> x = seq(0, 3, 1)
+> x
+0.0, 1.0, 2.0, 3.0
+> x^2
+0.0, 1.0, 4.0, 9.0
+> sin(pi / 2)
+1.0
+> pi % floor(pi)
+0.14159265358979312
+> ```
