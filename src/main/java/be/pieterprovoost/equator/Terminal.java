@@ -11,25 +11,22 @@ public class Terminal {
         EquationEngine engine = new EquationEngine();
         Scanner in = new Scanner(System.in);
 
-        String input = "";
-        while (!"quit".equals(input.trim())) {
+        String input;
+        while (true) {
             System.out.print("> ");
             input = in.nextLine();
-            if (input.contains("=")) {
-                try {
+            try {
+                if (input.equals("quit")) {
+                    break;
+                } else if (input.contains("=")) {
                     engine.evaluate(input);
-                } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
-                }
-            } else {
-                try {
+                } else {
                     engine.print(input);
-                } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
                 }
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
-
     }
 
 }
