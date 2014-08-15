@@ -9,6 +9,7 @@ public class Terminal {
 
     public static void main(String[] args) {
         EquationEngine engine = new EquationEngine();
+        //engine.setVerbose(true);
         Scanner in = new Scanner(System.in);
 
         String input;

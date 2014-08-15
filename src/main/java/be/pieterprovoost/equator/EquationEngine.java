@@ -11,6 +11,7 @@ public class EquationEngine {
 
     private Map<String, Token> map = new HashMap<String, Token>();
     private Stack<Token> stack = new Stack<Token>();
+    private boolean verbose = false;
 
     /**
      * Evaluates an equation. If the input is a single variable name, its value is printed.
@@ -68,6 +69,9 @@ public class EquationEngine {
      * @return result
      */
     private Token process(List<Token> queue) {
+        if (verbose) {
+            System.out.println("Queue: " + Util.toString(queue));
+        }
         stack.clear();
         for (int i = 0; i < queue.size(); i++) {
             Token token = queue.get(i);
@@ -114,4 +118,11 @@ public class EquationEngine {
         map.clear();
     }
 
+    public boolean isVerbose() {
+        return verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
+    }
 }
