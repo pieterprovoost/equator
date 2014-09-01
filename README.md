@@ -1,6 +1,6 @@
 # equator
 
-Equator evaluates mathematical equations using the shunting-yard algorithm. The syntax is a limited subset of R.
+Equator evaluates mathematical equations using the shunting-yard algorithm.
 
 ```java
 > x = seq(0, 3, 1)
